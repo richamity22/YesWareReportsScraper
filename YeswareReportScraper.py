@@ -62,7 +62,7 @@ class YeswareReportScraper:
             self.load_cookie("cookies.pk1")
             self.driver.refresh()
         except Exception as el:
-            self.logger.debug("Error Loading Cookie "+ str(el))
+            self.logger.debug("Error Loading Cookie " + str(el))
         self.driver.get('https://app.yesware.com')
         try:
             self.click_when_element_can_interact("//*[text()='Sign in with Google']")
@@ -151,21 +151,6 @@ class YeswareReportScraper:
             if there_are_more_pages:
                 self.click_when_element_can_interact(xpath_next_button)
         write_to_json(self.data_to_save, 'data')
-
-    def move_to_xpath_we(self, xpath_we):
-        self.wait_for_jquery_and_javascript_to_finish()
-        we = self.driver.find_element_by_xpath(xpath_we)
-        move_retry = 0
-        while move_retry < 5:
-            try:
-                self.logger.debug("Movimng to We")
-                self.action.move_to_element(we).perform()
-            except JavascriptException as ex:
-                self.logger.debug(ex.stacktrace)
-            except StaleElementReferenceException as se:
-                self.logger.debug(se.stacktrace)
-            move_retry = move_retry + 1
-        self.wait_for_jquery_and_javascript_to_finish()
 
     def scroll_by_we(self, we):
         try:
